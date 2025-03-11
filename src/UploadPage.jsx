@@ -59,7 +59,7 @@ const UploadPage = () => {
   return (
     <>
       <CssBaseline />
-      <Container sx={{ backgroundColor: "#F5F5F5", mt: 15 }}>
+      <Container sx={{ mt: 15 }}>
         <Typography
           variant="h2"
           sx={{
