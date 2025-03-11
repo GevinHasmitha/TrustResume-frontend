@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "@mui/system";
-import { CssBaseline, Box, Typography } from "@mui/material";
+import { CssBaseline, Box, Typography, Button } from "@mui/material";
 import CircularProgressBar from "./CircularProgressBar";
 import LinearProgressBar from "./LinearProgressBar";
 
@@ -78,6 +78,16 @@ const ViewScoresPage = () => {
               Awards: 2/10
             </Typography>
             <LinearProgressBar value={20} />
+            <Button
+              variant="contained"
+              sx={{
+                display: "flex-start",
+                backgroundColor: "#00A388",
+                marginTop: 3,
+              }}
+            >
+              View Explanations
+            </Button>
           </Box>
         </Box>
       </Container>
