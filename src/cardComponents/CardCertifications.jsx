@@ -24,7 +24,8 @@ const CardCertifications = ({ score, certifications = [], biases = [] }) => {
     >
       <Card
         sx={{
-          maxWidth: 400,
+          backgroundColor: "#F5F5F5",
+          maxWidth: "100%",
           borderRadius: 2,
           boxShadow: 3,
           transition: "0.3s",

@@ -12,6 +12,7 @@ const CardProjects = ({ number, imageUrl }) => {
     >
       <Card
         sx={{
+          backgroundColor: "#F5F5F5",
           maxWidth: "100%",
           borderRadius: 2,
           boxShadow: 3,
@@ -21,7 +22,7 @@ const CardProjects = ({ number, imageUrl }) => {
       >
         <CardContent>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-            Work Experience: {number}/10
+            Projects undertaken: {number}/10
           </Typography>
           <LinearProgressBar value={number * 10} />
         </CardContent>

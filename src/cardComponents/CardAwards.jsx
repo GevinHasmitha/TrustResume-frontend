@@ -24,7 +24,8 @@ const CardAwards = ({ score, awards = [] }) => {
     >
       <Card
         sx={{
-          maxWidth: 400,
+          backgroundColor: "#F5F5F5",
+          maxWidth: "100%",
           borderRadius: 2,
           boxShadow: 3,
           transition: "0.3s",
@@ -47,7 +48,7 @@ const CardAwards = ({ score, awards = [] }) => {
           </Box>
 
           {/* Awards Score */}
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight="bold" color="#5C5C5C">
             Awards Score: {score}/10
           </Typography>
           <LinearProgressBar value={score * 10} />
