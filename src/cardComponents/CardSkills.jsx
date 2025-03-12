@@ -48,7 +48,7 @@ const CardSkills = ({ score, skills = [], biases = [] }) => {
           </Box>
 
           {/* Skills Score */}
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight="bold" color="#5C5C5C">
             Skills Score: {score}/10
           </Typography>
           <LinearProgressBar value={score * 10} />

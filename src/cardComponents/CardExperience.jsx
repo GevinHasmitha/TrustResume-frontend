@@ -54,7 +54,7 @@ const CardExperience = ({
           </Box>
 
           {/* Display score First */}
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight="bold" color="#5C5C5C">
             Work Experience: {score}/10
           </Typography>
           <LinearProgressBar value={score * 10} />

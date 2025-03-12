@@ -46,7 +46,7 @@ const CardEducation = ({ score, studiedAt, gpa, degreeRequired, minGPA }) => {
           </Box>
 
           {/* Education Details */}
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight="bold" color="#5C5C5C">
             Education Details: {score}/10
           </Typography>
           <LinearProgressBar value={score * 10} />

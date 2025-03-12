@@ -48,7 +48,7 @@ const CardCertifications = ({ score, certifications = [], biases = [] }) => {
           </Box>
 
           {/* certifications Score */}
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight="bold" color="#5C5C5C">
             certifications Score: {score}/10
           </Typography>
           <LinearProgressBar value={score * 10} />

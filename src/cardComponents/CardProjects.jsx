@@ -21,7 +21,12 @@ const CardProjects = ({ number, imageUrl }) => {
         }}
       >
         <CardContent>
-          <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+          <Typography
+            variant="subtitle1"
+            fontWeight="bold"
+            color="#5C5C5C"
+            gutterBottom
+          >
             Projects undertaken: {number}/10
           </Typography>
           <LinearProgressBar value={number * 10} />
