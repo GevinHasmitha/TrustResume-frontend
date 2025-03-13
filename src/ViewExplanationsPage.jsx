@@ -51,7 +51,7 @@ function ViewExplanationsPage() {
               </Typography>
             </Box>
           </Box>
-          <CardProjects number={7} imageUrl={xaiImage} />
+          <CardProjects number={7.5} imageUrl={xaiImage} />
           <Box display="flex">
             <Box sx={{ flex: 1 }}>
               <Box sx={{ mt: 2 }}>

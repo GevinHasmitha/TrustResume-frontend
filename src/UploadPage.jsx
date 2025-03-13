@@ -14,8 +14,11 @@ import { Container } from "@mui/system";
 import MyDropzone from "./Dropzone";
 import ChipInput from "./ChipInput";
 import { commonStyles } from "./commonStyles";
+import { useNavigate } from "react-router-dom";
 
 const UploadPage = () => {
+  const navigate = useNavigate();
+
   // State to manage selected value for the selection box (Yes or No)
   const [selectionValue, setSelectionValue] = useState("");
 
@@ -156,6 +159,7 @@ const UploadPage = () => {
           <Button
             variant="contained"
             sx={{ margin: "10px", backgroundColor: "#00A388", pl: 5, pr: 5 }}
+            onClick={() => navigate("/view-scores")}
           >
             Upload
           </Button>

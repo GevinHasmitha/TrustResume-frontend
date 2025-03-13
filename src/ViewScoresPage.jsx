@@ -3,8 +3,10 @@ import { Container } from "@mui/system";
 import { CssBaseline, Box, Typography, Button } from "@mui/material";
 import CircularProgressBar from "./CircularProgressBar";
 import LinearProgressBar from "./LinearProgressBar";
+import { useNavigate } from "react-router-dom";
 
 const ViewScoresPage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <CssBaseline />
@@ -85,6 +87,7 @@ const ViewScoresPage = () => {
                 backgroundColor: "#00A388",
                 marginTop: 3,
               }}
+              onClick={() => navigate("/view-explanations")}
             >
               View Explanations
             </Button>
