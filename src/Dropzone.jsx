@@ -3,13 +3,17 @@ import { useDropzone } from "react-dropzone";
 import { Box, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"; // MUI upload icon
 
-function MyDropzone() {
-  const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
-  }, []);
+function MyDropzone({ onFileUpload }) {
+  // Accept a prop for handling uploaded files
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      console.log(acceptedFiles);
+      onFileUpload(acceptedFiles); // Pass uploaded files to parent component
+    },
+    [onFileUpload]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
   return (
     <Box
       {...getRootProps()}

@@ -15,9 +15,11 @@ import MyDropzone from "./Dropzone";
 import ChipInput from "./ChipInput";
 import { commonStyles } from "./commonStyles";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const UploadPage = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   // State to manage selected value for the selection box (Yes or No)
   const [selectionValue, setSelectionValue] = useState("");
@@ -35,6 +37,13 @@ const UploadPage = () => {
     gpa: "",
     awards: "",
   });
+
+  const [uploadedFiles, setUploadedFiles] = useState([]); // Store uploaded files
+
+  const handleFileUpload = (files) => {
+    console.log("Freom uploadPage: " + files); // Log uploaded files
+    setUploadedFiles(files); // Update state with new files
+  };
 
   // Handler to update the chip data for a specific field
   const handleChipDataChange = (fieldId, newData) => {
@@ -81,7 +90,7 @@ const UploadPage = () => {
           mollitia enim ad exercitationem.
         </Typography>
         <Box sx={{ my: 4 }}>
-          <MyDropzone />
+          <MyDropzone onFileUpload={handleFileUpload} />
         </Box>
         <Box
           sx={{
