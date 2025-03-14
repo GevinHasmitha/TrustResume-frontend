@@ -168,9 +168,81 @@ const UploadPage = () => {
           <Button
             variant="contained"
             sx={{ margin: "10px", backgroundColor: "#00A388", pl: 5, pr: 5 }}
-            onClick={() => navigate("/view-scores")}
+            onClick={async () => {
+              console.log();
+
+              setLoading(true); // Show a loading state while the request is being made
+              try {
+                const formData = new FormData();
+
+                // Conditionally append fields based on whether they have values
+                if (selectionValue) {
+                  formData.append(
+                    "weighted_degree",
+                    selectionValue === "Yes" ? true : false
+                  ); // "Yes" becomes true
+                }
+
+                if (textFieldData.gpa) {
+                  formData.append("weighted_gpa", textFieldData.gpa); // Append GPA if provided
+                }
+
+                if (textFieldData.comp_worked_at) {
+                  formData.append(
+                    "weighted_worked_as",
+                    textFieldData.comp_worked_at
+                  ); // Append job role if provided
+                }
+
+                if (textFieldData.years_exp) {
+                  formData.append(
+                    "weighted_years_experience",
+                    textFieldData.years_exp
+                  ); // Append years of experience if provided
+                }
+
+                // Convert arrays to comma-separated strings before sending (if they have values)
+                if (chipData.certifications.length > 0) {
+                  formData.append(
+                    "weighted_certifications",
+                    chipData.certifications.join(",")
+                  );
+                }
+
+                if (chipData.skills.length > 0) {
+                  formData.append("weighted_skills", chipData.skills.join(","));
+                }
+
+                // Append the PDF file (if any file is uploaded)
+                if (uploadedFiles.length > 0) {
+                  formData.append("pdf_file", uploadedFiles[0]); // Append first file (assuming single file upload)
+                } else {
+                  console.error("No file selected!");
+                  return;
+                }
+
+                // Send formData to API using axios
+                const response = await axios.post(
+                  "https://ae95-34-168-243-71.ngrok-free.app/set_weights/",
+                  formData,
+                  {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                    },
+                  }
+                );
+                console.log("Response:", response.data); // Log the response data
+
+                // Navigate to the scores page and pass the received data
+                navigate("/view-scores", { state: { scores: response.data } });
+              } catch (error) {
+                console.error("Error uploading data:", error);
+              } finally {
+                setLoading(false); // Hide loading state
+              }
+            }}
           >
-            Upload
+            {loading ? "Uploading..." : "Upload"}
           </Button>
         </Box>
       </Container>
