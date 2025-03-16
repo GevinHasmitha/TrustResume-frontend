@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "@mui/system";
 import { CssBaseline, Box, Typography, Button } from "@mui/material";
 import CircularProgressBar from "./CircularProgressBar";
 import LinearProgressBar from "./LinearProgressBar";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const ViewScoresPage = () => {
   const navigate = useNavigate();
@@ -13,10 +14,7 @@ const ViewScoresPage = () => {
 
   console.log("Type of skills_score:", typeof scores.data.skills_score);
 
-  // console.log(
-  //   "Scores received in ViewScoresPage:",
-  //   weights.weighted_certifications
-  // );
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <CssBaseline />
@@ -30,7 +28,7 @@ const ViewScoresPage = () => {
             paddingBottom: 6,
           }}
         >
-          <CircularProgressBar value={scores.data.total_score} />
+          <CircularProgressBar value={scores.data?.total_score || 0} />
           <Box
             sx={{
               display: "flex",
@@ -57,39 +55,47 @@ const ViewScoresPage = () => {
         <Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Projects: {scores.data.projects_score}/10
+              Projects: {scores.data?.projects_score ?? "N/A"}/10
             </Typography>
-            <LinearProgressBar value={scores.data.projects_score * 10} />
+            <LinearProgressBar
+              value={(scores.data?.projects_score || 0) * 10}
+            />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Work Experience: {scores.data.experience_score}/10
+              Work Experience: {scores.data?.experience_score ?? "N/A"}/10
             </Typography>
-            <LinearProgressBar value={scores.data.experience_score * 10} />
+            <LinearProgressBar
+              value={(scores.data?.experience_score || 0) * 10}
+            />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Education: {scores.data.education_score}/10
+              Education: {scores.data?.education_score ?? "N/A"}/10
             </Typography>
-            <LinearProgressBar value={scores.data.education_score * 10} />
+            <LinearProgressBar
+              value={(scores.data?.education_score || 0) * 10}
+            />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Skills: {scores.data.skills_score}/10
+              Skills: {scores.data?.skills_score ?? "N/A"}/10
             </Typography>
-            <LinearProgressBar value={scores.data.skills_score * 10} />
+            <LinearProgressBar value={(scores.data?.skills_score || 0) * 10} />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Certifications: {scores.data.certifications_score}/10
+              Certifications: {scores.data?.certifications_score ?? "N/A"}/10
             </Typography>
-            <LinearProgressBar value={scores.data.certifications_score * 10} />
+            <LinearProgressBar
+              value={(scores.data?.certifications_score || 0) * 10}
+            />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Awards: {scores.data.awards_score}/10
+              Awards: {scores.data?.awards_score ?? "N/A"}/10
             </Typography>
-            <LinearProgressBar value={scores.data.awards_score * 10} />
+            <LinearProgressBar value={(scores.data?.awards_score || 0) * 10} />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Button
@@ -99,9 +105,28 @@ const ViewScoresPage = () => {
                 backgroundColor: "#00A388",
                 marginTop: 3,
               }}
-              onClick={() => navigate("/view-explanations")}
+              onClick={async () => {
+                console.log();
+
+                setLoading(true); // Show a loading state while the request is being made
+                try {
+                  // Send formData to API using axios
+                  const response = await axios.get(
+                    "https://e22b-34-23-127-148.ngrok-free.app/process_stored_data/"
+                  );
+
+                  // Navigate to the scores page and pass the received data
+                  navigate("/view-explanations", {
+                    state: { scores: scores, weights: weights },
+                  });
+                } catch (error) {
+                  console.error("Error uploading data:", error);
+                } finally {
+                  setLoading(false); // Hide loading state
+                }
+              }}
             >
-              View Explanations
+              {loading ? "Generating..." : "View Explanations"}
             </Button>
           </Box>
         </Box>
