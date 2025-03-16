@@ -223,7 +223,7 @@ const UploadPage = () => {
 
                 // Send formData to API using axios
                 const response = await axios.post(
-                  "https://ae95-34-168-243-71.ngrok-free.app/set_weights/",
+                  "https://e22b-34-23-127-148.ngrok-free.app/set_weights/",
                   formData,
                   {
                     headers: {
@@ -231,10 +231,19 @@ const UploadPage = () => {
                     },
                   }
                 );
-                console.log("Response:", response.data); // Log the response data
+                // Cannot directly pass formdata to other page so we map it to a new object
+                const weightsObject = {};
+                formData.forEach((value, key) => {
+                  console.log("Key:", key, "Value:", value);
+                  weightsObject[key] = value;
+                });
+
+                //console.log("Response:", response.data); // Log the response data
 
                 // Navigate to the scores page and pass the received data
-                navigate("/view-scores", { state: { scores: response.data } });
+                navigate("/view-scores", {
+                  state: { scores: response.data, weights: weightsObject },
+                });
               } catch (error) {
                 console.error("Error uploading data:", error);
               } finally {
