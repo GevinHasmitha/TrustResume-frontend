@@ -223,7 +223,7 @@ const UploadPage = () => {
 
                 // Send formData to API using axios
                 const response = await axios.post(
-                  "https://e22b-34-23-127-148.ngrok-free.app/set_weights/",
+                  "https://3fcc-35-245-158-142.ngrok-free.app/set_weights/",
                   formData,
                   {
                     headers: {

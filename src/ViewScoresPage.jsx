@@ -106,23 +106,38 @@ const ViewScoresPage = () => {
                 marginTop: 3,
               }}
               onClick={async () => {
-                console.log();
-
                 setLoading(true); // Show a loading state while the request is being made
                 try {
-                  // Send formData to API using axios
+                  // Send GET request to API
                   const response = await axios.get(
-                    "https://e22b-34-23-127-148.ngrok-free.app/process_stored_data/"
+                    "https://a6ee-34-147-19-122.ngrok-free.app/process_stored_data/",
+                    {
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    }
                   );
 
-                  // Navigate to the scores page and pass the received data
+                  console.log("Response from explanation API:", response);
+
+                  // Assuming response.data contains the HTML content you need
+                  const { ner_html, regression_html } = response.data;
+                  console.log("NER HTML:", ner_html);
+                  console.log("Regression HTML:", regression_html);
+
+                  // Navigate to the next page and pass the received data as state
                   navigate("/view-explanations", {
-                    state: { scores: scores, weights: weights },
+                    state: {
+                      scores: scores,
+                      weights: weights,
+                      ner_html: ner_html, // Pass the NER HTML content
+                      regression_html: regression_html, // Pass the regression explanation HTML
+                    },
                   });
                 } catch (error) {
                   console.error("Error uploading data:", error);
                 } finally {
-                  setLoading(false); // Hide loading state
+                  setLoading(false); // Hide loading state after the request is finished
                 }
               }}
             >
