@@ -11,8 +11,11 @@ const ViewScoresPage = () => {
   const location = useLocation();
   const scores = location.state?.scores || {}; // Access passed state, default to empty object if undefined
   const weights = location.state?.weights || {}; // Access passed state, default to empty object if undefined
+  const extracted_data = location.state?.extracted_data || {}; // Access passed state, default to empty object if undefined
 
-  console.log("Type of skills_score:", typeof scores.data.skills_score);
+  console.log("Scores data:", scores); // Log the scores data
+
+  // console.log("Type of skills_score:", typeof scores.data.skills_score);
 
   const [loading, setLoading] = useState(false);
   return (
@@ -28,7 +31,7 @@ const ViewScoresPage = () => {
             paddingBottom: 6,
           }}
         >
-          <CircularProgressBar value={scores.data?.total_score || 0} />
+          <CircularProgressBar value={scores?.total_score || 0} />
           <Box
             sx={{
               display: "flex",
@@ -55,47 +58,41 @@ const ViewScoresPage = () => {
         <Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Projects: {scores.data?.projects_score ?? "N/A"}/10
+              Projects: {scores?.projects_score ?? "N/A"}/10
+            </Typography>
+            <LinearProgressBar value={(scores?.projects_score || 0) * 10} />
+          </Box>
+          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
+            <Typography variant="body1" sx={{ color: "#555555" }}>
+              Work Experience: {scores?.experience_score ?? "N/A"}/10
+            </Typography>
+            <LinearProgressBar value={(scores?.experience_score || 0) * 10} />
+          </Box>
+          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
+            <Typography variant="body1" sx={{ color: "#555555" }}>
+              Education: {scores?.education_score ?? "N/A"}/10
+            </Typography>
+            <LinearProgressBar value={(scores?.education_score || 0) * 10} />
+          </Box>
+          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
+            <Typography variant="body1" sx={{ color: "#555555" }}>
+              Skills: {scores?.skills_score ?? "N/A"}/10
+            </Typography>
+            <LinearProgressBar value={(scores?.skills_score || 0) * 10} />
+          </Box>
+          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
+            <Typography variant="body1" sx={{ color: "#555555" }}>
+              Certifications: {scores?.certifications_score ?? "N/A"}/10
             </Typography>
             <LinearProgressBar
-              value={(scores.data?.projects_score || 0) * 10}
+              value={(scores?.certifications_score || 0) * 10}
             />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Typography variant="body1" sx={{ color: "#555555" }}>
-              Work Experience: {scores.data?.experience_score ?? "N/A"}/10
+              Awards: {scores?.awards_score ?? "N/A"}/10
             </Typography>
-            <LinearProgressBar
-              value={(scores.data?.experience_score || 0) * 10}
-            />
-          </Box>
-          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
-            <Typography variant="body1" sx={{ color: "#555555" }}>
-              Education: {scores.data?.education_score ?? "N/A"}/10
-            </Typography>
-            <LinearProgressBar
-              value={(scores.data?.education_score || 0) * 10}
-            />
-          </Box>
-          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
-            <Typography variant="body1" sx={{ color: "#555555" }}>
-              Skills: {scores.data?.skills_score ?? "N/A"}/10
-            </Typography>
-            <LinearProgressBar value={(scores.data?.skills_score || 0) * 10} />
-          </Box>
-          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
-            <Typography variant="body1" sx={{ color: "#555555" }}>
-              Certifications: {scores.data?.certifications_score ?? "N/A"}/10
-            </Typography>
-            <LinearProgressBar
-              value={(scores.data?.certifications_score || 0) * 10}
-            />
-          </Box>
-          <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
-            <Typography variant="body1" sx={{ color: "#555555" }}>
-              Awards: {scores.data?.awards_score ?? "N/A"}/10
-            </Typography>
-            <LinearProgressBar value={(scores.data?.awards_score || 0) * 10} />
+            <LinearProgressBar value={(scores?.awards_score || 0) * 10} />
           </Box>
           <Box sx={{ width: "40%", margin: "auto", marginBottom: 2 }}>
             <Button
@@ -110,7 +107,7 @@ const ViewScoresPage = () => {
                 try {
                   // Send GET request to API
                   const response = await axios.get(
-                    "https://a6ee-34-147-19-122.ngrok-free.app/process_stored_data/",
+                    "http://127.0.0.1:8000/process_stored_data/",
                     {
                       headers: {
                         "Content-Type": "application/json",
@@ -121,7 +118,7 @@ const ViewScoresPage = () => {
                   console.log("Response from explanation API:", response);
 
                   // Assuming response.data contains the HTML content you need
-                  const { ner_html, regression_html } = response.data;
+                  const { ner_html, regression_html } = response.data.data;
                   console.log("NER HTML:", ner_html);
                   console.log("Regression HTML:", regression_html);
 
@@ -130,6 +127,7 @@ const ViewScoresPage = () => {
                     state: {
                       scores: scores,
                       weights: weights,
+                      extracted_data: extracted_data,
                       ner_html: ner_html, // Pass the NER HTML content
                       regression_html: regression_html, // Pass the regression explanation HTML
                     },

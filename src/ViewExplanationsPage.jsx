@@ -3,16 +3,44 @@ import { CssBaseline, Box, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import CircularProgressBar from "./CircularProgressBar";
 import CardProjects from "./cardComponents/CardProjects";
-import xaiImage from "./images/xai.png";
 import CardExperience from "./cardComponents/CardExperience";
 import CardEducation from "./cardComponents/CardEducation";
 import CardSkills from "./cardComponents/CardSkills";
 import CardCertifications from "./cardComponents/CardCertifications";
 import CardAwards from "./cardComponents/CardAwards";
-import htmlContent from "./htmlContent";
 import RenderHtml from "./RenderHtml";
+import { useLocation } from "react-router-dom";
 
 function ViewExplanationsPage() {
+  const location = useLocation();
+  const { scores, weights, extracted_data, ner_html, regression_html } =
+    location.state || {};
+  console.log("extracted_data", extracted_data);
+  // Splitting single string to array for weighted data
+  const weighted_degree = weights?.weighted_degree
+    ? weights.weighted_degree.split(",").map((item) => item.trim())
+    : false;
+
+  const weighted_gpa = weights?.weighted_gpa
+    ? weights.weighted_gpa.split(",").map((item) => item.trim())
+    : false;
+
+  const weighted_worked_as = weights?.weighted_worked_as
+    ? weights.weighted_worked_as.split(",").map((item) => item.trim())
+    : false;
+
+  const weighted_years_experience = weights?.weighted_years_experience
+    ? weights.weighted_years_experience.split(",").map((item) => item.trim())
+    : false;
+
+  const weighted_certifications = weights?.weighted_certifications
+    ? weights.weighted_certifications.split(",").map((item) => item.trim())
+    : false;
+
+  const weighted_skills = weights?.weighted_skills
+    ? weights.weighted_skills.split(",").map((item) => item.trim())
+    : false;
+
   return (
     <>
       <CssBaseline />
@@ -27,7 +55,7 @@ function ViewExplanationsPage() {
               paddingBottom: 6,
             }}
           >
-            <CircularProgressBar value={60} />
+            <CircularProgressBar value={scores.total_score} />
             <Box
               sx={{
                 display: "flex",
@@ -51,65 +79,54 @@ function ViewExplanationsPage() {
               </Typography>
             </Box>
           </Box>
-          <CardProjects number={7.5} imageUrl={xaiImage} />
+          <CardProjects
+            number={scores.projects_score}
+            reg_html={regression_html}
+          />
           <Box display="flex">
             <Box sx={{ flex: 1 }}>
               <Box sx={{ mt: 2 }}>
                 <CardExperience
-                  score={8} // Work Experience Score (out of 10)
-                  yearsWorked={[
-                    "2020 June to 2021 May",
-                    "2012 Feb to 2019 March",
-                  ]} // Years the user has worked
-                  previousRoles={[
-                    "Software Engineer",
-                    "Team Lead",
-                    "Project Manager",
-                  ]} // Previous job roles
-                  preferredYears={5} // Minimum preferred years of experience
-                  preferredExperienceAs="Senior Developer" // Preferred job title
+                  score={scores.experience_score} // Work Experience Score (out of 10)
+                  yearsWorked={extracted_data.years_experience} // Years the user has worked
+                  previousRoles={extracted_data.worked_as} // Previous job roles
+                  preferredYears={weighted_years_experience} // Minimum preferred years of experience
+                  preferredExperienceAs={weighted_worked_as} // Preferred job title
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
                 <CardEducation
-                  score={9}
-                  studiedAt="Harvard University"
-                  gpa="3.8"
-                  degreeRequired="Yes"
-                  minGPA="3.5"
+                  score={scores.education_score}
+                  studiedAt={extracted_data.university}
+                  gpa={extracted_data.gpa}
+                  degreeRequired={weighted_degree ? "Yes" : "No"}
+                  minGPA={weighted_gpa}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
                 <CardSkills
-                  score={4}
-                  skills={["JavaScript", "React", "Node.js"]}
-                  biases={["React", "Should have 3+ years of experience"]}
+                  score={scores.skills_score}
+                  skills={extracted_data.skills}
+                  biases={weighted_skills}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
                 <CardCertifications
-                  score={8}
-                  certifications={["AWS Certified", "PMP", "Scrum Master"]}
-                  biases={[
-                    "Must have AWS Certification",
-                    "Prefers PMP holders",
-                  ]}
+                  score={scores.certifications_score}
+                  certifications={extracted_data.certifications}
+                  biases={weighted_certifications}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
                 <CardAwards
-                  score={8}
-                  awards={[
-                    "Employee of the Year",
-                    "Best Innovator Award",
-                    "Top Performer 2023",
-                  ]}
+                  score={scores.awards_score}
+                  awards={extracted_data.awards}
                 />
               </Box>
             </Box>
             <Box sx={{ flex: 2 }}>
               <Container sx={{ height: "100%", padding: 4 }}>
-                <RenderHtml htmlContent={htmlContent} />{" "}
+                <RenderHtml htmlContent={ner_html} />{" "}
                 {/* Render the HTML content inside the page */}
               </Container>
             </Box>

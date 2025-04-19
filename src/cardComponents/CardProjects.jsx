@@ -1,9 +1,9 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import LinearProgressBar from "../LinearProgressBar";
 
-const CardProjects = ({ number, imageUrl }) => {
+const CardProjects = ({ number, reg_html }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -33,16 +33,16 @@ const CardProjects = ({ number, imageUrl }) => {
         </CardContent>
 
         {/* Image below the number */}
-        <CardMedia
-          sx={{
-            width: "100%",
-            objectFit: "contain",
-            padding: 2,
-          }}
-          component="img"
-          image={imageUrl}
-          alt="Project Image"
-        />
+        {reg_html && (
+          <Box
+            sx={{
+              width: "100%",
+              padding: 2,
+              overflowX: "auto",
+            }}
+            dangerouslySetInnerHTML={{ __html: reg_html }}
+          />
+        )}
       </Card>
     </motion.div>
   );
