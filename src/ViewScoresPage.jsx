@@ -21,7 +21,7 @@ const ViewScoresPage = () => {
   return (
     <>
       <CssBaseline />
-      <Container sx={{ backgroundColor: "#F5F5F5", height: "100vh" }}>
+      <Container sx={{ height: "100vh" }}>
         <Box
           sx={{
             display: "flex",

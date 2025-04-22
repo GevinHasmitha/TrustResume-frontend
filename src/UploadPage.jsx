@@ -84,10 +84,12 @@ const UploadPage = () => {
           Trust Resume
         </Typography>
         <Typography variant="body1" sx={{ width: "60%", margin: "auto" }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          magnam possimus blanditiis voluptatum nulla, minima nobis deserunt
-          eaque obcaecati commodi quae accusantium porro, quo aperiam id
-          mollitia enim ad exercitationem.
+          Our intelligent resume analysis platform offers transparent,
+          customizable, and accurate candidate evaluations. Users can tailor
+          evaluation criteria—like prioritizing GPA, specific skills, or
+          experience—making hiring smarter and more aligned with your needs. Say
+          goodbye to one-size-fits-all assessments and hello to insight-driven
+          decisions.
         </Typography>
         <Box sx={{ my: 4 }}>
           <MyDropzone onFileUpload={handleFileUpload} />
@@ -100,7 +102,7 @@ const UploadPage = () => {
           }}
         >
           <TextField
-            label="Preferred years of experience"
+            label="Preferred years of experience? (Optional)"
             type="number"
             value={textFieldData.years_exp || ""}
             onChange={(e) => handleTextFieldChange("years_exp", e.target.value)}
@@ -111,7 +113,7 @@ const UploadPage = () => {
             size="small"
           />
           <TextField
-            label="Preffered prevoius job role"
+            label="Preffered prevoius job role? (Optional)"
             value={textFieldData.comp_worked_at || ""}
             onChange={(e) =>
               handleTextFieldChange("comp_worked_at", e.target.value)
@@ -123,7 +125,7 @@ const UploadPage = () => {
             size="small"
           />
           <TextField
-            label="Preffered GPA"
+            label="Preffered GPA? (Optional)"
             value={textFieldData.gpa || ""}
             onChange={(e) => handleTextFieldChange("gpa", e.target.value)}
             fullWidth
@@ -143,7 +145,7 @@ const UploadPage = () => {
             size="small"
           >
             <InputLabel id="yes-no-select-label">
-              Do you have a degree?
+              Degree preferred? (Optional)
             </InputLabel>
             <Select
               labelId="yes-no-select-label"
@@ -156,12 +158,12 @@ const UploadPage = () => {
             </Select>
           </FormControl>
           <ChipInput
-            label="Preffered skils"
+            label="Preffered skils? (Optional)"
             fieldId="skills"
             onChange={handleChipDataChange}
           />
           <ChipInput
-            label="Preffered certifications"
+            label="Preffered certifications? (Optional)"
             fieldId="certifications"
             onChange={handleChipDataChange}
           />

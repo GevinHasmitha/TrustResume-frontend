@@ -1,5 +1,5 @@
 import React from "react";
-import { CssBaseline, Box, Typography } from "@mui/material";
+import { CssBaseline, Box, Typography, Button } from "@mui/material";
 import { Container } from "@mui/system";
 import CircularProgressBar from "./CircularProgressBar";
 import CardProjects from "./cardComponents/CardProjects";
@@ -9,10 +9,11 @@ import CardSkills from "./cardComponents/CardSkills";
 import CardCertifications from "./cardComponents/CardCertifications";
 import CardAwards from "./cardComponents/CardAwards";
 import RenderHtml from "./RenderHtml";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function ViewExplanationsPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { scores, weights, extracted_data, ner_html, regression_html } =
     location.state || {};
   console.log("extracted_data", extracted_data);
@@ -131,6 +132,15 @@ function ViewExplanationsPage() {
               </Container>
             </Box>
           </Box>
+        </Box>
+        <Box sx={{ textAlign: "center", mt: 4 }}>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "#00A388", px: 4, py: 1, mb: 3 }}
+            onClick={() => navigate("/")} // 👈 assumes upload page is at "/"
+          >
+            Upload New Resume
+          </Button>
         </Box>
       </Container>
     </>

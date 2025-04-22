@@ -33,16 +33,55 @@ const CardProjects = ({ number, reg_html }) => {
         </CardContent>
 
         {/* Image below the number */}
-        {reg_html && (
-          <Box
-            sx={{
-              width: "100%",
-              padding: 2,
-              overflowX: "auto",
-            }}
-            dangerouslySetInnerHTML={{ __html: reg_html }}
-          />
-        )}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 2,
+            padding: 2,
+          }}
+        >
+          {/* Left side: HTML content */}
+          <Box sx={{ flex: 7 }}>
+            <Typography
+              variant="subtitle2"
+              fontWeight="bold"
+              color="	#777777"
+              sx={{ marginBottom: 1 }}
+            >
+              Local Explainability
+            </Typography>
+            {reg_html && (
+              <Box
+                sx={{ overflowX: "auto" }}
+                dangerouslySetInnerHTML={{ __html: reg_html }}
+              />
+            )}
+          </Box>
+
+          {/* Right side: Image */}
+          <Box sx={{ flex: 3 }}>
+            <Typography
+              variant="subtitle2"
+              fontWeight="bold"
+              color="	#777777"
+              sx={{ marginBottom: 1 }}
+            >
+              Global Explainability
+            </Typography>
+            <Box
+              component="img"
+              src="/Picture1.png"
+              alt="Global Explainability"
+              sx={{
+                width: "100%",
+                objectFit: "contain",
+                maxHeight: 350,
+                borderRadius: 2,
+              }}
+            />
+          </Box>
+        </Box>
       </Card>
     </motion.div>
   );
